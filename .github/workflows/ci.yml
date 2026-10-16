@@ -7,6 +7,25 @@ on:
     branches: [master]
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install lint tools
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Ruff
+        run: ruff check app run.py run_tests.py seed.py config.py
+
   test:
     name: Smoke tests
     runs-on: ubuntu-latest

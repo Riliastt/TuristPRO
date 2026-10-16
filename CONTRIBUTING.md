@@ -57,7 +57,10 @@
 
 При каждом Push и Pull Request в `master` GitHub Actions:
 
-1. устанавливает Python и зависимости из `requirements.txt`;
-2. запускает `python run_tests.py` (smoke-тесты маршрутов).
+1. запускает **Lint** (Ruff) по коду приложения;
+2. устанавливает зависимости из `requirements.txt`;
+3. запускает `python run_tests.py` (smoke-тесты маршрутов).
 
-Зелёный статус проверки — обязательное условие для merge.
+Зелёный статус обеих проверок — обязательное условие для merge.
+
+Подробнее о процессе: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
