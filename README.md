@@ -78,3 +78,5 @@ seed.py
 ## Разработка и Git
 
 Процесс изменений описан в [CONTRIBUTING.md](CONTRIBUTING.md): ветки, Pull Request и code review по модели **GitHub Flow**.
+
+Автопроверки: GitHub Actions запускает `python run_tests.py` на каждом Push и Pull Request в `master`.
