@@ -81,9 +81,6 @@ def payment(booking_id):
             flash("Заполните данные карты корректно.", "danger")
             return render_template("booking/payment.html", booking=booking)
 
-        schedule = booking.schedule
-        seats_count = booking.seats_count
-
         booking.status = BookingStatus.PAID
         booking.payment.status = PaymentStatus.SUCCESS
         booking.payment.card_last4 = card_number[-4:]
