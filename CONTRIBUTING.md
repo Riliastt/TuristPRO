@@ -47,6 +47,12 @@
 - отсутствие секретов (пароли, ключи, `.env`);
 - прохождение автопроверок CI (workflow `.github/workflows/ci.yml`).
 
+## Issues и шаблоны
+
+- Ошибки оформляются через шаблон **Ошибка**.
+- Предложения — через шаблон **Улучшение**.
+- Pull Request заполняется по `.github/PULL_REQUEST_TEMPLATE.md`.
+
 ## Continuous Integration
 
 При каждом Push и Pull Request в `master` GitHub Actions:
