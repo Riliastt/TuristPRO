@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Мероприятия (админ){% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Все мероприятия</h1>
+    <p><a href="{{ url_for('admin.dashboard') }}">← Админ-панель</a></p>
+
+    <div class="table-wrap" style="margin-top: 1rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Организатор</th>
+                    <th>Цена</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in activities %}
+                <tr>
+                    <td>{{ a.title }}</td>
+                    <td>{{ a.organizer.full_name }}</td>
+                    <td>{{ "%.0f"|format(a.price) }} ₽</td>
+                    <td>{{ 'Активно' if a.is_active else 'Скрыто' }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.toggle_activity', activity_id=a.id) }}">
+                            <button type="submit" class="btn btn-secondary" style="padding:0.35rem 0.75rem;">
+                                {{ 'Скрыть' if a.is_active else 'Показать' }}
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

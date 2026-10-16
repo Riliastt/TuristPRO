@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Таблица 2 — Сценарии функционального тестирования</title>
+    <style>
+        body { font-family: "Segoe UI", sans-serif; background: #f5f7f6; padding: 28px; color: #1e2a28; font-size: 10pt; }
+        .caption { text-align: center; font-size: 13pt; font-weight: 600; margin-bottom: 20px; color: #134d42; }
+        .wrap { max-width: 960px; margin: 0 auto; background: #fff; border: 1px solid #d8e3e0; border-radius: 10px; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #d8e3e0; padding: 8px 10px; text-align: left; vertical-align: top; }
+        th { background: #1a6b5c; color: #fff; font-weight: 600; }
+        tr:nth-child(even) td { background: #fafcfb; }
+        .ok { color: #27ae60; font-weight: 600; }
+        .hint { text-align: center; margin-top: 12px; font-size: 9pt; color: #888; }
+    </style>
+</head>
+<body>
+    <p class="caption">Таблица 2 — Сценарии функционального тестирования TuristPRO</p>
+    <div class="wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Сценарий</th>
+                    <th>Роль</th>
+                    <th>Ожидаемый результат</th>
+                    <th>Результат</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Регистрация туриста</td><td>Гость</td><td>Запись в БД, переход на вход</td><td class="ok">Пройден</td></tr>
+                <tr><td>2</td><td>Вход с неверным паролем</td><td>Гость</td><td>Сообщение об ошибке</td><td class="ok">Пройден</td></tr>
+                <tr><td>3</td><td>Каталог: фильтр по категории</td><td>Гость</td><td>Отбор мероприятий</td><td class="ok">Пройден</td></tr>
+                <tr><td>4</td><td>Бронирование без входа</td><td>Гость</td><td>Перенаправление на login</td><td class="ok">Пройден</td></tr>
+                <tr><td>5</td><td>Бронирование 2 мест</td><td>Турист</td><td>seats_booked +2, status pending</td><td class="ok">Пройден</td></tr>
+                <tr><td>6</td><td>Имитация оплаты</td><td>Турист</td><td>status paid, payment success</td><td class="ok">Пройден</td></tr>
+                <tr><td>7</td><td>Отмена бронирования</td><td>Турист</td><td>Места возвращены, cancelled</td><td class="ok">Пройден</td></tr>
+                <tr><td>8</td><td>Создание мероприятия</td><td>Организатор</td><td>Запись в activities</td><td class="ok">Пройден</td></tr>
+                <tr><td>9</td><td>Добавление слота расписания</td><td>Организатор</td><td>Новая строка schedules</td><td class="ok">Пройден</td></tr>
+                <tr><td>10</td><td>Доступ туриста к /admin</td><td>Турист</td><td>HTTP 403</td><td class="ok">Пройден</td></tr>
+                <tr><td>11</td><td>Смена роли пользователя</td><td>Админ</td><td>role обновлён в БД</td><td class="ok">Пройден</td></tr>
+                <tr><td>12</td><td>Скрытие мероприятия</td><td>Админ</td><td>is_active = false, нет в каталоге</td><td class="ok">Пройден</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="hint">docs/risunok-27-test-cases.html — вставить в диплом как Таблица 2</p>
+</body>
+</html>

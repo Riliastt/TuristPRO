@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Бронирование #{{ booking.id }}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="form-card" style="max-width: 600px;">
+        <h1>Бронирование #{{ booking.id }}</h1>
+        <p><strong>Мероприятие:</strong> {{ booking.schedule.activity.title }}</p>
+        <p><strong>Дата:</strong> {{ booking.schedule.start_datetime.strftime('%d.%m.%Y %H:%M') }}</p>
+        <p><strong>Место проведения:</strong> {{ booking.schedule.activity.location }}</p>
+        <p><strong>Мест:</strong> {{ booking.seats_count }}</p>
+        <p><strong>Сумма:</strong> {{ "%.0f"|format(booking.total_amount) }} ₽</p>
+        <p><strong>Статус:</strong> <span class="status-{{ booking.status }}">{{ booking.status_label }}</span></p>
+        {% if booking.payment and booking.payment.card_last4 %}
+        <p><strong>Карта:</strong> **** {{ booking.payment.card_last4 }}</p>
+        {% endif %}
+
+        {% if booking.status == 'pending' %}
+        <a href="{{ url_for('booking.payment', booking_id=booking.id) }}" class="btn btn-primary">Оплатить</a>
+        <form method="post" action="{{ url_for('booking.cancel', booking_id=booking.id) }}" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Отменить</button>
+        </form>
+        {% elif booking.status == 'paid' %}
+        <form method="post" action="{{ url_for('booking.cancel', booking_id=booking.id) }}">
+            <button type="submit" class="btn btn-danger">Отменить бронирование</button>
+        </form>
+        {% endif %}
+
+        <p style="margin-top: 1.5rem;"><a href="{{ url_for('tourist.dashboard') }}">← К списку</a></p>
+    </div>
+</div>
+{% endblock %}

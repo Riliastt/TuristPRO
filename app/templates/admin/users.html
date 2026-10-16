@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Пользователи{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Пользователи</h1>
+    <p><a href="{{ url_for('admin.dashboard') }}">← Админ-панель</a></p>
+
+    <div class="table-wrap" style="margin-top: 1rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Email</th>
+                    <th>Роль</th>
+                    <th>Изменить роль</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.full_name }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.role }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin.change_role', user_id=u.id) }}" style="display:flex;gap:0.5rem;">
+                            <select name="role">
+                                <option value="tourist" {% if u.role == 'tourist' %}selected{% endif %}>tourist</option>
+                                <option value="organizer" {% if u.role == 'organizer' %}selected{% endif %}>organizer</option>
+                                <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>admin</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary" style="padding:0.35rem 0.75rem;">OK</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

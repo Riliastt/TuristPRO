@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ activity.title }}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="detail-header">
+        <div>
+            <img
+                src="{{ activity.image_url or url_for('static', filename='img/activity-placeholder.svg') }}"
+                alt="{{ activity.title }}"
+                onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/activity-placeholder.svg') }}';"
+            >
+        </div>
+        <div>
+            <span class="badge">{{ activity.activity_type_label }}</span>
+            <h1>{{ activity.title }}</h1>
+            <p>{{ activity.description }}</p>
+            <p><strong>Место:</strong> {{ activity.location }}</p>
+            <p><strong>Длительность:</strong> {{ activity.duration_minutes }} мин</p>
+            <p><strong>Организатор:</strong> {{ activity.organizer.full_name }}</p>
+            <p class="price">{{ "%.0f"|format(activity.price) }} ₽ за место</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Расписание</h2>
+    {% if schedules %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата и время</th>
+                    <th>Свободно мест</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in schedules %}
+                <tr>
+                    <td>{{ s.start_datetime.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ s.seats_available }} из {{ s.seats_total }}</td>
+                    <td>
+                        {% if s.seats_available > 0 %}
+                            {% if current_user.is_authenticated and current_user.is_tourist %}
+                            <a href="{{ url_for('booking.book', schedule_id=s.id) }}" class="btn btn-primary">Забронировать</a>
+                            {% elif not current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.login', next=url_for('booking.book', schedule_id=s.id)) }}" class="btn btn-secondary">Войти для бронирования</a>
+                            {% else %}
+                            <span>Войдите как турист</span>
+                            {% endif %}
+                        {% else %}
+                        <span>Мест нет</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>Ближайших слотов нет. Загляните позже.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>Откройте город через экскурсии и мастер-классы</h1>
+        <p>Бронируйте мероприятия онлайн: мгновенное подтверждение мест и удобная оплата.</p>
+        <p style="margin-top: 1.5rem;">
+            <a href="{{ url_for('catalog.catalog') }}" class="btn btn-primary">Смотреть каталог</a>
+        </p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="stats-row">
+        <div class="stat-card">
+            <strong>{{ popular|length }}+</strong>
+            <span>мероприятий</span>
+        </div>
+        <div class="stat-card">
+            <strong>{{ upcoming_count }}</strong>
+            <span>ближайших слотов</span>
+        </div>
+        <div class="stat-card">
+            <strong>{{ paid_bookings }}</strong>
+            <span>успешных бронирований</span>
+        </div>
+    </div>
+
+    <details class="demo-accounts" style="margin-bottom: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem 1.25rem;">
+        <summary style="cursor: pointer; font-weight: 600;">Тестовые аккаунты для демонстрации</summary>
+        <div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+            <div>
+                <strong>Админ</strong><br>
+                admin@turistpro.ru<br>
+                <code>admin123</code>
+            </div>
+            <div>
+                <strong>Организаторы</strong> <code>organizer123</code><br>
+                organizer@turistpro.ru<br>
+                elena.tours@turistpro.ru<br>
+                art.studio@turistpro.ru
+            </div>
+            <div>
+                <strong>Туристы</strong> <code>tourist123</code><br>
+                tourist@turistpro.ru<br>
+                dmitry@turistpro.ru<br>
+                anna@turistpro.ru<br>
+                guest.demo@turistpro.ru
+            </div>
+        </div>
+    </details>
+
+    <h2 class="section-title">Популярные мероприятия</h2>
+    <div class="grid">
+        {% for activity in popular %}
+        <article class="card">
+            <img
+                src="{{ activity.image_url or url_for('static', filename='img/activity-placeholder.svg') }}"
+                alt="{{ activity.title }}"
+                onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/activity-placeholder.svg') }}';"
+            >
+            <div class="card-body">
+                <span class="badge">{{ activity.activity_type_label }}</span>
+                <h3>{{ activity.title }}</h3>
+                <p>{{ activity.description[:100] }}{% if activity.description|length > 100 %}...{% endif %}</p>
+                <p class="price">{{ "%.0f"|format(activity.price) }} ₽</p>
+                <a href="{{ url_for('catalog.activity_detail', activity_id=activity.id) }}" class="btn btn-primary btn-block">Подробнее</a>
+            </div>
+        </article>
+        {% else %}
+        <p>Мероприятия пока не добавлены. Запустите <code>python seed.py</code> для демо-данных.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

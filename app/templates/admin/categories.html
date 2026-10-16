@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Категории{% endblock %}
+{% block content %}
+<div class="container two-col">
+    <div>
+        <h1 class="section-title">Категории</h1>
+        <p><a href="{{ url_for('admin.dashboard') }}">← Админ-панель</a></p>
+        <div class="table-wrap" style="margin-top: 1rem;">
+            <table>
+                <thead><tr><th>Название</th><th>Slug</th></tr></thead>
+                <tbody>
+                    {% for c in categories %}
+                    <tr><td>{{ c.name }}</td><td>{{ c.slug }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <h2 class="section-title">Добавить категорию</h2>
+        <div class="form-card" style="max-width: none;">
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Название</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="slug">Slug (латиница)</label>
+                    <input type="text" id="slug" name="slug" required placeholder="excursion">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

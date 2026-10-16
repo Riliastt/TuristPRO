@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рисунок 4 — ER-диаграмма базы данных TuristPRO</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7f6;
+            padding: 36px;
+            color: #1e2a28;
+        }
+        .caption {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: 600;
+            margin-bottom: 28px;
+            color: #134d42;
+        }
+        .diagram {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #d8e3e0;
+            border-radius: 12px;
+            padding: 36px 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+        .entity { fill: #e8f4f1; stroke: #1a6b5c; stroke-width: 2; }
+        .entity-title { fill: #134d42; font-weight: 700; font-size: 13px; }
+        .entity-field { fill: #1e2a28; font-size: 11px; }
+        .entity-pk { fill: #1a6b5c; font-weight: 700; }
+        .entity-fk { fill: #7b2cbf; font-style: italic; }
+        .line { stroke: #1a6b5c; stroke-width: 1.5; fill: none; }
+        .cardinality { fill: #5c6b68; font-size: 11px; font-weight: 600; }
+        .hint {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 10pt;
+            color: #888;
+        }
+        @media print {
+            body { background: #fff; padding: 16px; }
+            .diagram { box-shadow: none; }
+            .hint { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <p class="caption">Рисунок 4 — ER-диаграмма базы данных TuristPRO</p>
+    <div class="diagram">
+        <svg viewBox="0 0 920 620" xmlns="http://www.w3.org/2000/svg">
+            <!-- User -->
+            <rect class="entity" x="40" y="40" width="200" height="168" rx="6"/>
+            <text class="entity-title" x="140" y="62" text-anchor="middle">users</text>
+            <text class="entity-pk" x="52" y="82"><tspan>PK</tspan> id</text>
+            <text class="entity-field" x="52" y="98">email, password_hash</text>
+            <text class="entity-field" x="52" y="114">full_name, phone</text>
+            <text class="entity-field" x="52" y="130">role, created_at</text>
+
+            <!-- Category -->
+            <rect class="entity" x="360" y="40" width="200" height="120" rx="6"/>
+            <text class="entity-title" x="460" y="62" text-anchor="middle">categories</text>
+            <text class="entity-pk" x="372" y="82">PK id</text>
+            <text class="entity-field" x="372" y="98">name, slug</text>
+
+            <!-- Activity -->
+            <rect class="entity" x="340" y="220" width="240" height="200" rx="6"/>
+            <text class="entity-title" x="460" y="242" text-anchor="middle">activities</text>
+            <text class="entity-pk" x="352" y="262">PK id</text>
+            <text class="entity-field" x="352" y="278">title, description</text>
+            <text class="entity-field" x="352" y="294">location, price</text>
+            <text class="entity-field" x="352" y="310">duration_minutes</text>
+            <text class="entity-field" x="352" y="326">image_url, is_active</text>
+            <text class="entity-fk" x="352" y="342">FK category_id</text>
+            <text class="entity-fk" x="352" y="358">FK organizer_id</text>
+            <text class="entity-field" x="352" y="374">created_at</text>
+
+            <!-- Schedule -->
+            <rect class="entity" x="340" y="470" width="240" height="130" rx="6"/>
+            <text class="entity-title" x="460" y="492" text-anchor="middle">schedules</text>
+            <text class="entity-pk" x="352" y="512">PK id</text>
+            <text class="entity-field" x="352" y="528">start_datetime</text>
+            <text class="entity-field" x="352" y="544">seats_total, seats_booked</text>
+            <text class="entity-fk" x="352" y="560">FK activity_id</text>
+
+            <!-- Booking -->
+            <rect class="entity" x="640" y="300" width="240" height="168" rx="6"/>
+            <text class="entity-title" x="760" y="322" text-anchor="middle">bookings</text>
+            <text class="entity-pk" x="652" y="342">PK id</text>
+            <text class="entity-field" x="652" y="358">seats_count</text>
+            <text class="entity-field" x="652" y="374">total_amount, status</text>
+            <text class="entity-field" x="652" y="390">created_at</text>
+            <text class="entity-fk" x="652" y="406">FK user_id</text>
+            <text class="entity-fk" x="652" y="422">FK schedule_id</text>
+
+            <!-- Payment -->
+            <rect class="entity" x="640" y="500" width="240" height="150" rx="6"/>
+            <text class="entity-title" x="760" y="522" text-anchor="middle">payments</text>
+            <text class="entity-pk" x="652" y="542">PK id</text>
+            <text class="entity-field" x="652" y="558">amount, status</text>
+            <text class="entity-field" x="652" y="574">card_last4</text>
+            <text class="entity-field" x="652" y="590">created_at, paid_at</text>
+            <text class="entity-fk" x="652" y="606">FK booking_id (unique)</text>
+
+            <!-- Lines User -> Activity (organizer) -->
+            <path class="line" d="M 140 208 L 140 320 L 340 320"/>
+            <text class="cardinality" x="200" y="312">1 : N</text>
+            <text class="cardinality" x="155" y="230">организатор</text>
+
+            <!-- Category -> Activity -->
+            <path class="line" d="M 460 160 L 460 220"/>
+            <text class="cardinality" x="472" y="195">1 : N</text>
+
+            <!-- Activity -> Schedule -->
+            <path class="line" d="M 460 420 L 460 470"/>
+            <text class="cardinality" x="472" y="450">1 : N</text>
+
+            <!-- User -> Booking (tourist) -->
+            <path class="line" d="M 240 124 L 300 124 L 300 368 L 640 368"/>
+            <text class="cardinality" x="310" y="360">1 : N</text>
+            <text class="cardinality" x="248" y="118">турист</text>
+
+            <!-- Schedule -> Booking -->
+            <path class="line" d="M 580 520 L 610 520 L 610 384 L 640 384"/>
+            <text class="cardinality" x="592" y="512">1 : N</text>
+
+            <!-- Booking -> Payment -->
+            <path class="line" d="M 760 468 L 760 500"/>
+            <text class="cardinality" x="772" y="488">1 : 1</text>
+        </svg>
+    </div>
+    <p class="hint">Откройте в браузере → скриншот для вставки в диплом</p>
+</body>
+</html>

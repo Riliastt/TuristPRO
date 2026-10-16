@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Редактирование' if activity else 'Новое мероприятие' }}{% endblock %}
+{% block content %}
+<div class="container two-col">
+    <div>
+        <h1 class="section-title">{{ 'Редактирование' if activity else 'Новое мероприятие' }}</h1>
+        <div class="form-card" style="max-width: none;">
+            <form method="post">
+                <div class="form-group">
+                    <label for="title">Название</label>
+                    <input type="text" id="title" name="title" value="{{ activity.title if activity else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="category_id">Категория</label>
+                    <select id="category_id" name="category_id" required>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if activity and activity.category_id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <textarea id="description" name="description" required>{{ activity.description if activity else '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="location">Место проведения</label>
+                    <input type="text" id="location" name="location" value="{{ activity.location if activity else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Цена (₽)</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" value="{{ activity.price if activity else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration_minutes">Длительность (мин)</label>
+                    <input type="number" id="duration_minutes" name="duration_minutes" min="15" value="{{ activity.duration_minutes if activity else 60 }}">
+                </div>
+                <div class="form-group">
+                    <label for="image_url">URL изображения</label>
+                    <input type="url" id="image_url" name="image_url" value="{{ activity.image_url if activity and activity.image_url else '' }}">
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" name="is_active" {% if not activity or activity.is_active %}checked{% endif %}> Активно в каталоге</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a href="{{ url_for('organizer.dashboard') }}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+
+    {% if activity %}
+    <div>
+        <h2 class="section-title">Расписание</h2>
+        <div class="form-card" style="max-width: none; margin-bottom: 1.5rem;">
+            <form method="post" action="{{ url_for('organizer.schedule_add', activity_id=activity.id) }}">
+                <div class="form-group">
+                    <label for="date">Дата</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Время</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="seats_total">Мест</label>
+                    <input type="number" id="seats_total" name="seats_total" min="1" value="15" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Добавить слот</button>
+            </form>
+        </div>
+
+        {% if schedules %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Мест</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in schedules %}
+                    <tr>
+                        <td>{{ s.start_datetime.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td>{{ s.seats_booked }}/{{ s.seats_total }}</td>
+                        <td>
+                            {% if s.seats_booked == 0 %}
+                            <form method="post" action="{{ url_for('organizer.schedule_delete', schedule_id=s.id) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.5rem;font-size:0.8rem;">Удалить</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if bookings %}
+        <h2 class="section-title" style="margin-top: 2rem;">Бронирования</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Турист</th>
+                        <th>Дата</th>
+                        <th>Мест</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>{{ b.tourist.full_name }}</td>
+                        <td>{{ b.schedule.start_datetime.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td>{{ b.seats_count }}</td>
+                        <td class="status-{{ b.status }}">{{ b.status_label }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

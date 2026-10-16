@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d3142"/>
+      <stop offset="100%" stop-color="#8d99ae"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <path d="M180 375 H620 V225 L580 195 L540 225 L500 195 L460 225 L420 195 L380 225 L340 195 L300 225 L260 195 L220 225 L180 195 Z" fill="#ffffff" opacity="0.25"/>
+  <rect x="245" y="275" width="70" height="100" rx="8" fill="#ffffff" opacity="0.28"/>
+  <rect x="365" y="255" width="70" height="120" rx="8" fill="#ffffff" opacity="0.28"/>
+  <rect x="485" y="275" width="70" height="100" rx="8" fill="#ffffff" opacity="0.28"/>
+  <path d="M145 395 H655" stroke="#ffffff" stroke-width="14" stroke-linecap="round" opacity="0.45"/>
+  <circle cx="635" cy="105" r="48" fill="#ffd166" opacity="0.75"/>
+  <text x="400" y="105" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700" fill="#ffffff">История</text>
+  <text x="400" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#ffffff">Музеи, замки и легенды</text>
+</svg>

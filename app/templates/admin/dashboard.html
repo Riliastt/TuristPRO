@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Админ-панель</h1>
+
+    <div class="stats-row">
+        <div class="stat-card"><strong>{{ stats.users }}</strong><span>пользователей</span></div>
+        <div class="stat-card"><strong>{{ stats.activities }}</strong><span>мероприятий</span></div>
+        <div class="stat-card"><strong>{{ stats.bookings }}</strong><span>бронирований</span></div>
+        <div class="stat-card"><strong>{{ stats.categories }}</strong><span>категорий</span></div>
+    </div>
+
+    <p>
+        <a href="{{ url_for('admin.users') }}" class="btn btn-secondary">Пользователи</a>
+        <a href="{{ url_for('admin.categories') }}" class="btn btn-secondary">Категории</a>
+        <a href="{{ url_for('admin.activities') }}" class="btn btn-secondary">Мероприятия</a>
+        <a href="{{ url_for('admin.bookings') }}" class="btn btn-secondary">Бронирования</a>
+    </p>
+
+    <h2 class="section-title" style="margin-top: 2rem;">Последние бронирования</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Турист</th>
+                    <th>Мероприятие</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in recent_bookings %}
+                <tr>
+                    <td>{{ b.id }}</td>
+                    <td>{{ b.tourist.full_name }}</td>
+                    <td>{{ b.schedule.activity.title }}</td>
+                    <td>{{ "%.0f"|format(b.total_amount) }} ₽</td>
+                    <td class="status-{{ b.status }}">{{ b.status_label }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5">Бронирований пока нет</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

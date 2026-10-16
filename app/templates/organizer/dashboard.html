@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Кабинет организатора{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Кабинет организатора</h1>
+    <p>
+        <a href="{{ url_for('organizer.activity_new') }}" class="btn btn-primary">+ Добавить мероприятие</a>
+    </p>
+
+    {% if activities %}
+    <div class="table-wrap" style="margin-top: 1.5rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>Цена</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in activities %}
+                <tr>
+                    <td>{{ a.title }}</td>
+                    <td>{{ a.activity_type_label }}</td>
+                    <td>{{ "%.0f"|format(a.price) }} ₽</td>
+                    <td>{{ 'Активно' if a.is_active else 'Скрыто' }}</td>
+                    <td>
+                        <a href="{{ url_for('organizer.activity_edit', activity_id=a.id) }}">Редактировать</a>
+                        | <a href="{{ url_for('catalog.activity_detail', activity_id=a.id) }}?preview=1">Просмотр</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>У вас пока нет мероприятий.</p>
+    {% endif %}
+</div>
+{% endblock %}

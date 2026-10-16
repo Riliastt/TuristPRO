@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Изображение мероприятия">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a6b5c"/>
+      <stop offset="100%" stop-color="#e8a838"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <circle cx="620" cy="115" r="65" fill="#ffffff" opacity="0.18"/>
+  <path d="M90 360 L245 205 L365 325 L455 250 L710 360 Z" fill="#ffffff" opacity="0.24"/>
+  <path d="M120 385 H680" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity="0.35"/>
+  <text x="400" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="#ffffff">TuristPRO</text>
+  <text x="400" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" fill="#ffffff" opacity="0.92">Экскурсии и мастер-классы</text>
+</svg>

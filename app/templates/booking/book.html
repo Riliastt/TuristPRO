@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Бронирование{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="form-card" style="max-width: 520px;">
+        <h1>Бронирование</h1>
+        <p><strong>{{ activity.title }}</strong></p>
+        <p>Дата: {{ schedule.start_datetime.strftime('%d.%m.%Y %H:%M') }}</p>
+        <p>Свободно мест: {{ schedule.seats_available }}</p>
+        <p>Цена за место: {{ "%.0f"|format(activity.price) }} ₽</p>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="seats_count">Количество мест</label>
+                <input type="number" id="seats_count" name="seats_count" value="1" min="1" max="{{ schedule.seats_available }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Перейти к оплате</button>
+        </form>
+        <p style="margin-top: 1rem;">
+            <a href="{{ url_for('catalog.activity_detail', activity_id=activity.id) }}">← Назад</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

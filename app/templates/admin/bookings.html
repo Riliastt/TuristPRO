@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Бронирования (админ){% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="section-title">Все бронирования</h1>
+    <p><a href="{{ url_for('admin.dashboard') }}">← Админ-панель</a></p>
+
+    <div class="table-wrap" style="margin-top: 1rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Турист</th>
+                    <th>Мероприятие</th>
+                    <th>Дата</th>
+                    <th>Мест</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td>{{ b.id }}</td>
+                    <td>{{ b.tourist.full_name }}</td>
+                    <td>{{ b.schedule.activity.title }}</td>
+                    <td>{{ b.schedule.start_datetime.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ b.seats_count }}</td>
+                    <td>{{ "%.0f"|format(b.total_amount) }} ₽</td>
+                    <td class="status-{{ b.status }}">{{ b.status_label }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
