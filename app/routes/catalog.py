@@ -15,6 +15,7 @@ def catalog():
     category_id = request.args.get("category", type=int)
     min_price = request.args.get("min_price", type=float)
     max_price = request.args.get("max_price", type=float)
+    sort = request.args.get("sort", "title").strip().lower()
 
     if search:
         query = query.filter(
@@ -27,7 +28,14 @@ def catalog():
     if max_price is not None:
         query = query.filter(Activity.price <= max_price)
 
-    activities = query.order_by(Activity.title).all()
+    sort_map = {
+        "title": Activity.title.asc(),
+        "price_asc": Activity.price.asc(),
+        "price_desc": Activity.price.desc(),
+        "duration": Activity.duration_minutes.asc(),
+    }
+    order_by = sort_map.get(sort, Activity.title.asc())
+    activities = query.order_by(order_by).all()
     categories = Category.query.order_by(Category.name).all()
 
     return render_template(
@@ -38,6 +46,8 @@ def catalog():
         category_id=category_id,
         min_price=min_price,
         max_price=max_price,
+        sort=sort,
+        results_count=len(activities),
     )
 
 
