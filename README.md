@@ -74,3 +74,7 @@ config.py
 run.py
 seed.py
 ```
+
+## Разработка и Git
+
+Процесс изменений описан в [CONTRIBUTING.md](CONTRIBUTING.md): ветки, Pull Request и code review по модели **GitHub Flow**.
