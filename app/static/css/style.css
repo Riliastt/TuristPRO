@@ -264,6 +264,11 @@ main {
     align-items: end;
 }
 
+.results-count {
+    margin: 0 0 1rem;
+    color: var(--muted);
+}
+
 .table-wrap {
     overflow-x: auto;
     background: var(--card);
